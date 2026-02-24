@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
-import { PRODUCTS } from './data';
+import { getProducts } from './api';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './components/Home';
@@ -13,12 +13,29 @@ function App() {
   const [currentPage, setCurrentPage] = useState('home');
   const [cart, setCart] = useState([]);
   const [user, setUser] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch products from backend on app load
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const data = await getProducts();
+        setProducts(data);
+      } catch (error) {
+        console.error('Failed to load products:', error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProducts();
+  }, []);
 
   const addToCart = (product) => {
-    const existing = cart.find(item => item.id === product.id);
+    const existing = cart.find(item => item._id === product._id);
     if (existing) {
       setCart(cart.map(item => 
-        item.id === product.id 
+        item._id === product._id 
           ? { ...item, quantity: item.quantity + 1 }
           : item
       ));
@@ -28,7 +45,7 @@ function App() {
   };
 
   const removeFromCart = (productId) => {
-    setCart(cart.filter(item => item.id !== productId));
+    setCart(cart.filter(item => item._id !== productId));
   };
 
   const updateQuantity = (productId, quantity) => {
@@ -36,13 +53,17 @@ function App() {
       removeFromCart(productId);
     } else {
       setCart(cart.map(item => 
-        item.id === productId ? { ...item, quantity } : item
+        item._id === productId ? { ...item, quantity } : item
       ));
     }
   };
 
   const getCartTotal = () => {
     return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+  };
+
+  const clearCart = () => {
+    setCart([]);
   };
 
   const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
@@ -61,7 +82,9 @@ function App() {
         {currentPage === 'home' && <Home setCurrentPage={setCurrentPage} />}
         
         {currentPage === 'products' && (
-          <Products products={PRODUCTS} addToCart={addToCart} />
+          loading 
+            ? <div className="container"><p>Loading products...</p></div>
+            : <Products products={products} addToCart={addToCart} />
         )}
         
         {currentPage === 'cart' && (
@@ -71,6 +94,8 @@ function App() {
             removeFromCart={removeFromCart}
             getCartTotal={getCartTotal}
             setCurrentPage={setCurrentPage}
+            user={user}
+            clearCart={clearCart}
           />
         )}
         
