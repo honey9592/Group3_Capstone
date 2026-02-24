@@ -26,7 +26,7 @@ function Products({ products, addToCart }) {
 
       <div className="products-grid">
         {filteredProducts.map(product => (
-          <div key={product.id} className="product-card">
+          <div key={product._id} className="product-card">
             <div className="product-image">
               <img src={`https://via.placeholder.com/150x150?text=${product.name}`} alt={product.name} />
             </div>
