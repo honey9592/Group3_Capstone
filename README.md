@@ -46,7 +46,7 @@ npm start       # Opens at http://localhost:3000
 ---
 
 ## Admin Login Credentials
-- **Email:** admin@groceryhub.com
+- **Email:** admin@gmail.com
 - **Password:** admin123
 
 ---
