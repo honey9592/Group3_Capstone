@@ -297,7 +297,7 @@ const seedDatabase = async () => {
       const hashedPassword = await bcrypt.hash('admin123', salt);
       await User.create({
         name: 'Admin',
-        email: 'admin@groceryhub.com',
+        email: 'admin@gmail.com',
         password: hashedPassword,
         role: 'admin'
       });
