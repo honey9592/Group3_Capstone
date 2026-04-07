@@ -2,12 +2,36 @@ import React from 'react';
 import { getEmoji, getBg, hasImage } from '../utils/productImage';
 
 const categories = [
-  { name: 'Fruits', emoji: '🍎', color: '#fee2e2' },
-  { name: 'Vegetables', emoji: '🥬', color: '#dcfce7' },
-  { name: 'Dairy', emoji: '🧀', color: '#fef9c3' },
-  { name: 'Bakery', emoji: '🍞', color: '#ffedd5' },
-  { name: 'Meat', emoji: '🥩', color: '#fce7f3' },
-  { name: 'Beverages', emoji: '🧃', color: '#e0e7ff' },
+  {
+    name: 'Fresh Produce',
+    filterCategory: 'Vegetables',
+    image: 'https://i.ibb.co/REPLACE/produce.png',
+    color: '#dcfce7'
+  },
+  {
+    name: 'Dairy',
+    filterCategory: 'Dairy',
+    image: 'https://i.ibb.co/REPLACE/dairy.png',
+    color: '#fef9c3'
+  },
+  {
+    name: 'Punjabi Specials',
+    filterCategory: 'Pantry',
+    image: 'https://i.ibb.co/REPLACE/punjabi.png',
+    color: '#fef3c7'
+  },
+  {
+    name: 'Snacks',
+    filterCategory: 'Snacks',
+    image: 'https://i.ibb.co/REPLACE/snacks.png',
+    color: '#fed7aa'
+  },
+  {
+    name: 'Household',
+    filterCategory: 'Household',
+    image: 'https://i.ibb.co/REPLACE/household.png',
+    color: '#e0f2fe'
+  },
 ];
 
 const features = [
