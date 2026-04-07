@@ -50,12 +50,11 @@ function Footer({ setCurrentPage }) {
           <div className="footer-col">
             <h4>Categories</h4>
             <ul className="footer-links-list">
-              <li><button onClick={() => setCurrentPage('products')}>🍎 Fruits</button></li>
-              <li><button onClick={() => setCurrentPage('products')}>🥬 Vegetables</button></li>
+              <li><button onClick={() => setCurrentPage('products')}>🥬 Fresh Produce</button></li>
               <li><button onClick={() => setCurrentPage('products')}>🧀 Dairy</button></li>
-              <li><button onClick={() => setCurrentPage('products')}>🍞 Bakery</button></li>
-              <li><button onClick={() => setCurrentPage('products')}>🥩 Meat</button></li>
-              <li><button onClick={() => setCurrentPage('products')}>🧃 Beverages</button></li>
+              <li><button onClick={() => setCurrentPage('products')}>🌾 Punjabi Specials</button></li>
+              <li><button onClick={() => setCurrentPage('products')}>🍪 Snacks</button></li>
+              <li><button onClick={() => setCurrentPage('products')}>🧺 Household</button></li>
             </ul>
           </div>
 
@@ -101,12 +100,6 @@ function Footer({ setCurrentPage }) {
           <div className="footer-bottom-inner">
             <p>&copy; 2026 GroceryHub. All rights reserved.</p>
             <p className="footer-credit">Group 3 — Web Development Capstone</p>
-            <div className="footer-payment-icons">
-              <span className="payment-icon">VISA</span>
-              <span className="payment-icon">MC</span>
-              <span className="payment-icon">AMEX</span>
-              <span className="payment-icon">COD</span>
-            </div>
           </div>
         </div>
       </div>
