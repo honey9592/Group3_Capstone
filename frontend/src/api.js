@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5000/api';
+const API_URL = process.env.REACT_APP_API_URL || 'https://group3-capstone-223t.onrender.com/api';
 
 // ─── Products ───
 export const getProducts = async () => {
