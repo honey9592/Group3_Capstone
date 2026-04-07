@@ -66,7 +66,7 @@ function Login({ setUser, setCurrentPage }) {
           <button className="link-btn" onClick={() => setCurrentPage('register')}>Register</button>
         </p>
         <div className="admin-hint">
-          <small>Admin? Use: admin@groceryhub.com / admin123</small>
+          
         </div>
       </div>
     </div>
