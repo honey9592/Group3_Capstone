@@ -5,31 +5,31 @@ const categories = [
   {
     name: 'Fresh Produce',
     filterCategory: 'Vegetables',
-    image: 'https://i.ibb.co/REPLACE/produce.png',
+    image: 'https://i.ibb.co/Y4NMx4hF/produce.png',
     color: '#dcfce7'
   },
   {
     name: 'Dairy',
     filterCategory: 'Dairy',
-    image: 'https://i.ibb.co/REPLACE/dairy.png',
+    image: 'https://i.ibb.co/d4ZMKMvn/dairy.png',
     color: '#fef9c3'
   },
   {
     name: 'Punjabi Specials',
     filterCategory: 'Pantry',
-    image: 'https://i.ibb.co/REPLACE/punjabi.png',
+    image: 'https://i.ibb.co/GvK1ZMSX/punjabi.png',
     color: '#fef3c7'
   },
   {
     name: 'Snacks',
     filterCategory: 'Snacks',
-    image: 'https://i.ibb.co/REPLACE/snacks.png',
+    image: 'https://i.ibb.co/5g5DThBf/snacks.png',
     color: '#fed7aa'
   },
   {
     name: 'Household',
     filterCategory: 'Household',
-    image: 'https://i.ibb.co/REPLACE/household.png',
+    image: 'https://i.ibb.co/nNH5hcDj/household.png',
     color: '#e0f2fe'
   },
 ];
