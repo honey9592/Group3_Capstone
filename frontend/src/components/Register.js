@@ -27,46 +27,51 @@ function Register({ setUser, setCurrentPage }) {
   return (
     <div className="container">
       <div className="auth-form">
-        <h2>Register</h2>
-        {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
-        <form onSubmit={handleRegister}>
+        <div className="auth-header">
+          <span className="auth-icon">🎉</span>
+          <h2>Create Account</h2>
+          <p>Join GroceryHub today</p>
+        </div>
+        {error && <div className="error-banner">{error}</div>}
+        <div className="form-body">
           <div className="form-group">
-            <label>Name:</label>
-            <input 
-              type="text" 
+            <label>Full Name</label>
+            <input
+              type="text"
+              placeholder="John Doe"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
             />
           </div>
           <div className="form-group">
-            <label>Email:</label>
-            <input 
-              type="email" 
+            <label>Email</label>
+            <input
+              type="email"
+              placeholder="your@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
           <div className="form-group">
-            <label>Password:</label>
-            <input 
-              type="password" 
+            <label>Password</label>
+            <input
+              type="password"
+              placeholder="Min 6 characters"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
               minLength={6}
             />
           </div>
-          <button type="submit" disabled={loading}>
-            {loading ? 'Registering...' : 'Register'}
+          <button className="btn-primary full-width" onClick={handleRegister} disabled={loading}>
+            {loading ? 'Creating Account...' : 'Create Account'}
           </button>
-        </form>
-        <p>
-          Already have an account? 
-          <button className="link-btn" onClick={() => setCurrentPage('login')}>
-            Login
-          </button>
+        </div>
+        <p className="auth-footer">
+          Already have an account?
+          <button className="link-btn" onClick={() => setCurrentPage('login')}>Login</button>
         </p>
       </div>
     </div>

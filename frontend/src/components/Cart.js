@@ -1,33 +1,16 @@
-import React, { useState } from 'react';
-import { placeOrder } from '../api';
+import React from 'react';
+import { getEmoji, hasImage } from '../utils/productImage';
 
-function Cart({ cart, updateQuantity, removeFromCart, getCartTotal, setCurrentPage, user, clearCart }) {
-  const [orderPlaced, setOrderPlaced] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-
-  if (orderPlaced) {
-    return (
-      <div className="container">
-        <div className="empty-cart">
-          <h2>✅ Order Placed Successfully!</h2>
-          <p style={{ margin: '15px 0', color: '#666' }}>Thank you for your order.</p>
-          <button onClick={() => setCurrentPage('products')}>
-            Continue Shopping
-          </button>
-        </div>
-      </div>
-    );
-  }
+function Cart({ cart, updateQuantity, removeFromCart, getCartTotal, setCurrentPage, user }) {
 
   if (cart.length === 0) {
     return (
       <div className="container">
         <div className="empty-cart">
+          <div className="empty-icon">🛒</div>
           <h2>Your cart is empty</h2>
-          <button onClick={() => setCurrentPage('products')}>
-            Continue Shopping
-          </button>
+          <p>Add some products to get started!</p>
+          <button className="btn-primary" onClick={() => setCurrentPage('products')}>Browse Products</button>
         </div>
       </div>
     );
@@ -38,102 +21,55 @@ function Cart({ cart, updateQuantity, removeFromCart, getCartTotal, setCurrentPa
   const shipping = subtotal > 50 ? 0 : 5.99;
   const total = subtotal + tax + shipping;
 
-  const handleCheckout = async () => {
-    if (!user) {
-      setCurrentPage('login');
-      return;
-    }
-
-    setLoading(true);
-    setError('');
-
-    try {
-      const orderData = {
-        userEmail: user.email,
-        userName: user.name,
-        items: cart.map(item => ({
-          productId: item._id,
-          name: item.name,
-          price: item.price,
-          quantity: item.quantity
-        })),
-        subtotal: parseFloat(subtotal.toFixed(2)),
-        tax: parseFloat(tax.toFixed(2)),
-        shipping: parseFloat(shipping.toFixed(2)),
-        total: parseFloat(total.toFixed(2))
-      };
-
-      await placeOrder(orderData);
-      clearCart();
-      setOrderPlaced(true);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
+  const handleCheckout = () => {
+    if (!user) { setCurrentPage('login'); return; }
+    setCurrentPage('checkout');
   };
 
   return (
     <div className="container">
-      <h1>Shopping Cart</h1>
-      
-      {error && <p style={{ color: 'red', textAlign: 'center', margin: '10px 0' }}>{error}</p>}
+      <h1 className="page-title">Shopping Cart <span className="item-count">({cart.length} items)</span></h1>
 
       <div className="cart-layout">
         <div className="cart-items">
           {cart.map(item => (
             <div key={item._id} className="cart-item">
-              <div className="item-image">
-                <img src={`https://via.placeholder.com/60x60?text=${item.name}`} alt={item.name} />
+              <div className="cart-item-thumb">
+                {hasImage(item) ? (
+                  <img src={item.image} alt={item.name} className="cart-thumb-img" />
+                ) : (
+                  <span className="cart-thumb-emoji">{getEmoji(item.category)}</span>
+                )}
               </div>
               <div className="item-details">
                 <h3>{item.name}</h3>
-                <p>${item.price.toFixed(2)}</p>
+                <p className="item-price">${item.price.toFixed(2)} each</p>
               </div>
               <div className="item-quantity">
-                <button onClick={() => updateQuantity(item._id, item.quantity - 1)}>-</button>
+                <button onClick={() => updateQuantity(item._id, item.quantity - 1)}>−</button>
                 <span>{item.quantity}</span>
                 <button onClick={() => updateQuantity(item._id, item.quantity + 1)}>+</button>
               </div>
-              <div className="item-total">
-                ${(item.price * item.quantity).toFixed(2)}
-              </div>
-              <button 
-                className="remove-btn"
-                onClick={() => removeFromCart(item._id)}
-              >
-                X
-              </button>
+              <div className="item-total">${(item.price * item.quantity).toFixed(2)}</div>
+              <button className="remove-btn" onClick={() => removeFromCart(item._id)} title="Remove item">✕</button>
             </div>
           ))}
         </div>
 
         <div className="cart-summary">
           <h2>Order Summary</h2>
+          <div className="summary-row"><span>Subtotal</span><span>${subtotal.toFixed(2)}</span></div>
+          <div className="summary-row"><span>Tax (13% HST)</span><span>${tax.toFixed(2)}</span></div>
           <div className="summary-row">
-            <span>Subtotal:</span>
-            <span>${subtotal.toFixed(2)}</span>
+            <span>Shipping</span>
+            <span className={shipping === 0 ? 'free-shipping' : ''}>{shipping === 0 ? 'FREE' : `$${shipping.toFixed(2)}`}</span>
           </div>
-          <div className="summary-row">
-            <span>Tax (13%):</span>
-            <span>${tax.toFixed(2)}</span>
-          </div>
-          <div className="summary-row">
-            <span>Shipping:</span>
-            <span>{shipping === 0 ? 'FREE' : `$${shipping.toFixed(2)}`}</span>
-          </div>
-          {shipping > 0 && (
-            <p className="shipping-note">
-              Add ${(50 - subtotal).toFixed(2)} more for free shipping!
-            </p>
-          )}
-          <div className="summary-row total">
-            <strong>Total:</strong>
-            <strong>${total.toFixed(2)}</strong>
-          </div>
-          <button className="checkout-btn" onClick={handleCheckout} disabled={loading}>
-            {loading ? 'Placing Order...' : (user ? 'Place Order' : 'Login to Checkout')}
+          {shipping > 0 && <p className="shipping-note">🚚 Add ${(50 - subtotal).toFixed(2)} more for free shipping!</p>}
+          <div className="summary-row total"><strong>Total</strong><strong>${total.toFixed(2)}</strong></div>
+          <button className="checkout-btn" onClick={handleCheckout}>
+            {user ? 'Proceed to Checkout →' : 'Login to Checkout'}
           </button>
+          <button className="btn-outline full-width" onClick={() => setCurrentPage('products')} style={{ marginTop: '10px' }}>← Continue Shopping</button>
         </div>
       </div>
     </div>

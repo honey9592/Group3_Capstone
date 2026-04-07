@@ -15,7 +15,11 @@ function Login({ setUser, setCurrentPage }) {
     try {
       const data = await loginUser(email, password);
       setUser(data.user);
-      setCurrentPage('home');
+      if (data.user.role === 'admin') {
+        setCurrentPage('admin');
+      } else {
+        setCurrentPage('home');
+      }
     } catch (err) {
       setError(err.message);
     } finally {
@@ -26,37 +30,44 @@ function Login({ setUser, setCurrentPage }) {
   return (
     <div className="container">
       <div className="auth-form">
-        <h2>Login</h2>
-        {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
-        <form onSubmit={handleLogin}>
+        <div className="auth-header">
+          <span className="auth-icon">👋</span>
+          <h2>Welcome Back</h2>
+          <p>Sign in to your account</p>
+        </div>
+        {error && <div className="error-banner">{error}</div>}
+        <div className="form-body">
           <div className="form-group">
-            <label>Email:</label>
-            <input 
-              type="email" 
+            <label>Email</label>
+            <input
+              type="email"
+              placeholder="your@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
           <div className="form-group">
-            <label>Password:</label>
-            <input 
-              type="password" 
+            <label>Password</label>
+            <input
+              type="password"
+              placeholder="Enter password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
-          <button type="submit" disabled={loading}>
-            {loading ? 'Logging in...' : 'Login'}
+          <button className="btn-primary full-width" onClick={handleLogin} disabled={loading}>
+            {loading ? 'Signing in...' : 'Sign In'}
           </button>
-        </form>
-        <p>
-          Don't have an account? 
-          <button className="link-btn" onClick={() => setCurrentPage('register')}>
-            Register
-          </button>
+        </div>
+        <p className="auth-footer">
+          Don't have an account?
+          <button className="link-btn" onClick={() => setCurrentPage('register')}>Register</button>
         </p>
+        <div className="admin-hint">
+          <small>Admin? Use: admin@groceryhub.com / admin123</small>
+        </div>
       </div>
     </div>
   );
