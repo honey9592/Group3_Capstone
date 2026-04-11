@@ -5,7 +5,7 @@ const categories = [
   {
     name: 'Fresh Produce',
     filterCategory: 'Vegetables',
-    image: '',
+    image: 'https://i.ibb.co/Y4NMx4hF/produce.png',
     color: '#dcfce7'
   },
   {
