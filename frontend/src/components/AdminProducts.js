@@ -92,14 +92,7 @@ function AdminProducts({ refreshProducts, showToast }) {
               </div>
               <div className="form-group"><label>Description</label><textarea name="description" value={form.description} onChange={handleChange} placeholder="Product description..." rows={3} /></div>
 
-              {/* Image URL Field */}
-              <div className="form-group">
-                <label>Image URL</label>
-                <input name="image" value={form.image} onChange={handleChange} placeholder="https://i.ibb.co/xxxxx/product.jpg" />
-                <small className="form-hint">
-                  Upload your image to <a href="https://imgbb.com/" target="_blank" rel="noreferrer">ImgBB</a>, <a href="https://postimages.org/" target="_blank" rel="noreferrer">Postimages</a>, or <a href="https://imgur.com/" target="_blank" rel="noreferrer">Imgur</a> and paste the direct link here.
-                </small>
-              </div>
+             
 
               {/* Image Preview */}
               {form.image && form.image.trim() !== '' && (
