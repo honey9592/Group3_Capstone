@@ -11,25 +11,25 @@ const categories = [
   {
     name: 'Dairy',
     filterCategory: 'Dairy',
-    image: '',
+    image: 'https://i.ibb.co/d4ZMKMvn/dairy.png',
     color: '#fef9c3'
   },
   {
     name: 'Punjabi Specials',
     filterCategory: 'Pantry',
-    image: '',
+    image: 'https://i.ibb.co/GvK1ZMSX/punjabi.png',
     color: '#fef3c7'
   },
   {
     name: 'Snacks',
     filterCategory: 'Snacks',
-    image: '',
+    image: 'https://i.ibb.co/5g5DThBf/snacks.png',
     color: '#fed7aa'
   },
   {
     name: 'Household',
     filterCategory: 'Household',
-    image: '',
+    image: 'https://i.ibb.co/nNH5hcDj/household.png',
     color: '#e0f2fe'
   },
 ];
@@ -66,7 +66,13 @@ function Home({ setCurrentPage, products, addToCart, navigateToProduct }) {
         <div className="categories">
           {categories.map(cat => (
             <div key={cat.name} className="category-card" style={{ '--cat-bg': cat.color }} onClick={() => setCurrentPage('products')}>
-              <div className="category-emoji">{cat.emoji}</div>
+              {cat.image && cat.image.trim() !== '' ? (
+                <div className="category-image">
+                  <img src={cat.image} alt={cat.name} />
+                </div>
+              ) : (
+                <div className="category-emoji">{getEmoji(cat.filterCategory)}</div>
+              )}
               <h3>{cat.name}</h3>
             </div>
           ))}
